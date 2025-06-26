@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - beeqube
+    paths: 
+      - 'charts/**'
+      - '.github/workflows/release.yml'
 
 jobs:
   release:
