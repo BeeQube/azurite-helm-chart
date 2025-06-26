@@ -24,12 +24,11 @@ spec:
         - name: azurite-init-containers
           image: "{{ .Values.config.blobs.initJob.image.repository}}:{{ .Values.config.blobs.initJob.image.version | toString }}"
           env:
-            - name: AZURE_STORAGE_CONNECTION_STRING
-              value: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1"
-            - name: AZURE_STORAGE_PUBLIC_CONTAINERS
-              value: {{ .Values.config.blobs.initJob.containers.public | default "" }}
-            - name: AZURE_STORAGE_PRIVATE_CONTAINERS
-              value: {{ .Values.config.blobs.initJob.containers.private | default "" }}
+            env:
+              {{- range $key, $value := .Values.config.blobs.initJob.env }}
+              - name: {{ $key }}
+                value: "{{ $value }}"
+              {{- end }}
       restartPolicy: OnFailure
   backoffLimit: 10
 {{- end }}
