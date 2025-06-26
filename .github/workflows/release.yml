@@ -8,6 +8,14 @@ on:
     paths: 
       - 'charts/**'
       - '.github/workflows/release.yml'
+      
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
   release:
     # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
