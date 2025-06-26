@@ -35,13 +35,29 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
         
-      - name: Copy README as index
+      - name: Setup Jekyll site with README
         run: |
           # Create a build directory
           mkdir -p _site
           
-          # Copy README.md as index.md (GitHub Pages will render it automatically)
-          cp README.md _site/index.md
+          # Create Jekyll config to enable markdown processing
+          cat > _site/_config.yml << 'EOF'
+          markdown: kramdown
+          highlighter: rouge
+          theme: minima
+          plugins:
+            - jekyll-feed
+            - jekyll-sitemap
+          EOF
+          
+          # Copy README as index.md with Jekyll front matter
+          cat > _site/index.md << 'EOF'
+          ---
+          layout: default
+          ---
+          
+          EOF
+          cat README.md >> _site/index.md
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
