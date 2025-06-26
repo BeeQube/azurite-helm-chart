@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'beeqube'
     paths:
       - 'README.md'
 jobs:
